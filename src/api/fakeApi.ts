@@ -26,7 +26,10 @@ export const api = {
     if (!query) return allData
     const lowerQuery = query.toLowerCase()
     return allData.filter((record) =>
-      record.name.toLowerCase().includes(lowerQuery)
+      Object.values(record).some(
+        (value) =>
+          value != null && String(value).toLowerCase().includes(lowerQuery)
+      )
     )
   },
 }

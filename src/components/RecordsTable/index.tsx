@@ -48,8 +48,8 @@ export const RecordsTable = ({
         <Button type="primary" onClick={onAdd}>
           Add row
         </Button>
-        <Input.Search
-          placeholder="Search by name..."
+        <Input
+          placeholder="Search by everything"
           allowClear
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
