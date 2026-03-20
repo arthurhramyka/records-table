@@ -18,4 +18,15 @@ export const api = {
   delete: async (): Promise<void> => {
     await delay()
   },
+  search: async (
+    query: string,
+    allData: TableRecord[]
+  ): Promise<TableRecord[]> => {
+    await delay()
+    if (!query) return allData
+    const lowerQuery = query.toLowerCase()
+    return allData.filter((record) =>
+      record.name.toLowerCase().includes(lowerQuery)
+    )
+  },
 }

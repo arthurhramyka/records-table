@@ -10,41 +10,26 @@ const initialRecords: TableRecord[] = [
 ]
 
 function App() {
-  const { data, loading, handleCreate, handleUpdate, handleDelete } =
-    useTableOperations(initialRecords)
+  const {
+    data,
+    loading,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
+    handleSearch,
+  } = useTableOperations(initialRecords)
 
   const { isOpen, editingItem, openModal, closeModal } =
     useModalState<TableRecord>()
 
-  const handleOpenCreate = useCallback(() => {
-    openModal()
-  }, [openModal])
-
-  const handleOpenEdit = useCallback(
-    (record: TableRecord) => {
-      openModal(record)
-    },
-    [openModal]
-  )
-
-  const handleSubmit = useCallback(
-    async (formData: TableRecordFormData) => {
-      if (editingItem) {
-        await handleUpdate(editingItem.id, formData)
-        return
-      }
-
+  const handleSubmit = async (formData: TableRecordFormData) => {
+    if (editingItem) {
+      await handleUpdate(editingItem.id, formData)
+    } else {
       await handleCreate(formData)
-    },
-    [editingItem, handleCreate, handleUpdate]
-  )
-
-  const handleDeleteRecord = useCallback(
-    (record: TableRecord) => {
-      void handleDelete(record)
-    },
-    [handleDelete]
-  )
+    }
+    closeModal()
+  }
 
   return (
     <>
@@ -52,9 +37,10 @@ function App() {
         loading={loading}
         title="Records table"
         data={data}
-        onAdd={handleOpenCreate}
-        onDelete={handleDeleteRecord}
-        onEdit={handleOpenEdit}
+        onAdd={() => openModal()}
+        onDelete={handleDelete}
+        onEdit={openModal}
+        onSearch={handleSearch}
       />
       <RecordModal
         isOpen={isOpen}
