@@ -5,7 +5,7 @@ export const useModalState = <T,>() => {
   const [editingItem, setEditingItem] = useState<T | null>(null)
 
   const openModal = useCallback((item?: T) => {
-    setEditingItem(item || null)
+    setEditingItem(item ?? null)
     setIsOpen(true)
   }, [])
 

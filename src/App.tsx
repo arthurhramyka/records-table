@@ -1,30 +1,68 @@
+import { useCallback } from 'react'
+import { RecordModal } from '@/components/RecordsTable/RecordModal'
 import { RecordsTable } from '@/components/RecordsTable'
-import type { TableRecord } from '@/types/types'
+import { useModalState } from '@/hooks/useModalState'
+import { useTableOperations } from '@/hooks/useTableOperations'
+import type { TableRecord, TableRecordFormData } from '@/types/types'
+
+const initialRecords: TableRecord[] = [
+  { id: 1, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+]
 
 function App() {
-  const mockData: TableRecord[] = [
-    { id: 1, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-    { id: 2, name: 'Jane Smith', date: '2026-03-18', value: 840.0 },
-    { id: 3, name: 'Alice Johnson', date: '2026-03-17', value: 2300.75 },
-    { id: 4, name: 'Alice Johnson', date: '2026-03-17', value: 2300.75 },
-    { id: 5, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-    { id: 6, name: 'Jane Smith', date: '2026-03-18', value: 840.0 },
-    { id: 7, name: 'Alice Johnson', date: '2026-03-17', value: 2300.75 },
-    { id: 8, name: 'Alice Johnson', date: '2026-03-17', value: 2300.75 },
-    { id: 9, name: 'Alice Johnson', date: '2026-03-17', value: 2300.75 },
-    { id: 10, name: 'Alice Johnson', date: '2026-03-17', value: 2300.75 },
-    { id: 11, name: 'Alice Johnson', date: '2026-03-17', value: 2300.75 },
-  ]
+  const { data, loading, handleCreate, handleUpdate, handleDelete } =
+    useTableOperations(initialRecords)
+
+  const { isOpen, editingItem, openModal, closeModal } =
+    useModalState<TableRecord>()
+
+  const handleOpenCreate = useCallback(() => {
+    openModal()
+  }, [openModal])
+
+  const handleOpenEdit = useCallback(
+    (record: TableRecord) => {
+      openModal(record)
+    },
+    [openModal]
+  )
+
+  const handleSubmit = useCallback(
+    async (formData: TableRecordFormData) => {
+      if (editingItem) {
+        await handleUpdate(editingItem.id, formData)
+        return
+      }
+
+      await handleCreate(formData)
+    },
+    [editingItem, handleCreate, handleUpdate]
+  )
+
+  const handleDeleteRecord = useCallback(
+    (record: TableRecord) => {
+      void handleDelete(record)
+    },
+    [handleDelete]
+  )
 
   return (
-    <RecordsTable
-      loading={false}
-      title="Records table"
-      data={mockData}
-      onAdd={() => {}}
-      onDelete={() => {}}
-      onEdit={() => {}}
-    />
+    <>
+      <RecordsTable
+        loading={loading}
+        title="Records table"
+        data={data}
+        onAdd={handleOpenCreate}
+        onDelete={handleDeleteRecord}
+        onEdit={handleOpenEdit}
+      />
+      <RecordModal
+        isOpen={isOpen}
+        initialData={editingItem}
+        onClose={closeModal}
+        onSubmit={handleSubmit}
+      />
+    </>
   )
 }
 

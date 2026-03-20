@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { message } from 'antd'
 import { api } from '@/api/fakeApi'
 import type { TableRecord, TableRecordFormData } from '@/types/types'
@@ -6,6 +6,10 @@ import type { TableRecord, TableRecordFormData } from '@/types/types'
 export const useTableOperations = (initialData: TableRecord[] = []) => {
   const [data, setData] = useState<TableRecord[]>(initialData)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setData(initialData)
+  }, [initialData])
 
   const handleCreate = useCallback(async (formData: TableRecordFormData) => {
     setLoading(true)
@@ -43,11 +47,12 @@ export const useTableOperations = (initialData: TableRecord[] = []) => {
   const handleDelete = useCallback(async (record: TableRecord) => {
     setLoading(true)
     try {
-      await api.delete(record.id)
+      await api.delete()
       setData((prev) => prev.filter((item) => item.id !== record.id))
       message.success('Record deleted!')
     } catch (error) {
       message.error('Error! Something wrong!')
+      throw error
     } finally {
       setLoading(false)
     }

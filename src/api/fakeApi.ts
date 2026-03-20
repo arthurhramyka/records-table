@@ -15,7 +15,7 @@ export const api = {
     await delay()
     return { ...data, id }
   },
-  delete: async (id: number): Promise<void> => {
+  delete: async (): Promise<void> => {
     await delay()
   },
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Form, Input, InputNumber, DatePicker, message } from 'antd'
-import dayjs from 'dayjs'
+import { DatePicker, Form, Input, InputNumber, message } from 'antd'
+import type { FormProps } from 'antd'
+import dayjs, { type Dayjs } from 'dayjs'
 import { GenericModal } from '@/components/generic/GenericModal'
 import type { TableRecord, TableRecordFormData } from '@/types/types'
 
@@ -11,40 +12,53 @@ interface RecordModalProps {
   onSubmit: (data: TableRecordFormData) => Promise<void>
 }
 
+interface RecordModalFormValues {
+  name: string
+  date: Dayjs
+  value: number
+}
+
 export const RecordModal = ({
   isOpen,
   initialData,
   onClose,
   onSubmit,
 }: RecordModalProps) => {
-  const [form] = Form.useForm()
+  const [form] = Form.useForm<RecordModalFormValues>()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const isEditing = !!initialData
 
   useEffect(() => {
-    if (isOpen) {
-      if (initialData) {
-        form.setFieldsValue({
-          name: initialData.name,
-          value: initialData.value,
-          date: dayjs(initialData.date),
-        })
-      } else {
-        form.resetFields()
-      }
+    if (!isOpen) {
+      return
     }
-  }, [initialData])
 
-  const handleFinish = async (values: any) => {
+    if (initialData) {
+      form.setFieldsValue({
+        name: initialData.name,
+        value: initialData.value,
+        date: dayjs(initialData.date),
+      })
+    } else {
+      form.resetFields()
+    }
+  }, [form, initialData, isOpen])
+
+  const handleFinish: FormProps<RecordModalFormValues>['onFinish'] = async (
+    values
+  ) => {
     setIsSubmitting(true)
+
     try {
       const formattedData: TableRecordFormData = {
         name: values.name,
         value: values.value,
         date: values.date.format('YYYY-MM-DD'),
       }
+
       await onSubmit(formattedData)
+      form.resetFields()
       onClose()
     } catch {
       message.error('Submit failed')
@@ -78,7 +92,7 @@ export const RecordModal = ({
         <Form.Item
           label="Date"
           name="date"
-          rules={[{ required: true, message: 'Name is required' }]}
+          rules={[{ required: true, message: 'Date is required' }]}
         >
           <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
         </Form.Item>
@@ -88,7 +102,7 @@ export const RecordModal = ({
           name="value"
           rules={[
             { required: true, message: 'Enter value' },
-            { type: 'number', message: 'Value must be number' },
+            { type: 'number', message: 'Value must be a number' },
           ]}
         >
           <InputNumber style={{ width: '100%' }} placeholder="Enter value" />
