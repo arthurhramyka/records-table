@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { RecordModal } from '@/components/RecordsTable/RecordModal'
 import { RecordsTable } from '@/components/RecordsTable'
 import { useModalState } from '@/hooks/useModalState'
@@ -7,6 +6,13 @@ import type { TableRecord, TableRecordFormData } from '@/types/types'
 
 const initialRecords: TableRecord[] = [
   { id: 1, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 2, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 3, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 4, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 5, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 6, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 7, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 8, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
 ]
 
 function App() {

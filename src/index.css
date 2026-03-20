@@ -1,0 +1,26 @@
+/* Card container for main table */
+.table-card {
+  margin: 24px auto;
+  max-width: 1200px;
+}
+
+/* Title styling for table heading */
+.table-title {
+  margin-bottom: 24px;
+}
+
+/* Flex container for controls */
+.table-controls {
+  margin-bottom: 5px;
+}
+
+/* Search input container */
+.table-search {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Full-width input fields */
+.full-width-input {
+  width: 100%;
+}

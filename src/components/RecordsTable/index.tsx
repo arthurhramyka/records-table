@@ -39,12 +39,12 @@ export const RecordsTable = ({
   }, [debouncedSearchValue])
 
   return (
-    <Card style={{ margin: '24px auto', maxWidth: '1200px' }}>
-      <Title level={3} style={{ marginBottom: '24px' }}>
+    <Card className="table-card">
+      <Title level={3} className="table-title">
         {title}
       </Title>
 
-      <Flex wrap={true} gap={'5px'} style={{ marginBottom: '5px' }}>
+      <Flex wrap={true} gap={'5px'} className="table-controls">
         <Button type="primary" onClick={onAdd}>
           Add row
         </Button>
@@ -53,7 +53,7 @@ export const RecordsTable = ({
           allowClear
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          style={{ width: '100%', maxWidth: '300px' }}
+          className="table-search"
         />
       </Flex>
 
@@ -62,7 +62,7 @@ export const RecordsTable = ({
         loading={loading}
         columns={columns}
         dataSource={data}
-        scroll={{ x: 800 }}
+        scroll={{ x: 800, y: 400 }}
         bordered
         {...tableProps}
       />

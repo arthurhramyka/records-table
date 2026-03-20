@@ -94,7 +94,7 @@ export const RecordModal = ({
           name="date"
           rules={[{ required: true, message: 'Date is required' }]}
         >
-          <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
+          <DatePicker className="full-width-input" format="YYYY-MM-DD" />
         </Form.Item>
 
         <Form.Item
@@ -105,7 +105,7 @@ export const RecordModal = ({
             { type: 'number', message: 'Value must be a number' },
           ]}
         >
-          <InputNumber style={{ width: '100%' }} placeholder="Enter value" />
+          <InputNumber className="full-width-input" placeholder="Enter value" />
         </Form.Item>
       </Form>
     </GenericModal>
