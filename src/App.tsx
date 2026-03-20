@@ -6,13 +6,13 @@ import type { TableRecord, TableRecordFormData } from '@/types/types'
 
 const initialRecords: TableRecord[] = [
   { id: 1, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-  { id: 2, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-  { id: 3, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-  { id: 4, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-  { id: 5, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-  { id: 6, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-  { id: 7, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
-  { id: 8, name: 'John Doe', date: '2026-03-19', value: 1500.5 },
+  { id: 2, name: 'Pastyr Andersen', date: '2000-01-20', value: 15100.5 },
+  { id: 3, name: 'Vanya Antohin', date: '2011-02-02', value: 150.5 },
+  { id: 4, name: 'Petr Dinosaur', date: '2026-03-19', value: 15004.5 },
+  { id: 5, name: 'Cracker Pavlov', date: '2026-03-19', value: 20.5 },
+  { id: 6, name: 'Venuta Debuta', date: '2026-03-19', value: 5500.5 },
+  { id: 7, name: 'Zelezniy Beton', date: '2026-03-19', value: 3500.5 },
+  { id: 8, name: 'Sasha', date: '2001-01-01', value: 8500.51 },
 ]
 
 function App() {

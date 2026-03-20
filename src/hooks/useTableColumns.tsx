@@ -14,16 +14,20 @@ export const useTableColumns = (
         dataIndex: 'name',
         key: 'name',
         width: 300,
+        sorter: (a, b) => a.name.localeCompare(b.name),
       },
       {
         title: 'Date',
         dataIndex: 'date',
         key: 'date',
+        sorter: (a, b) =>
+          new Date(a.date).getTime() - new Date(b.date).getTime(),
       },
       {
         title: 'Value',
         dataIndex: 'value',
         key: 'value',
+        sorter: (a, b) => a.value - b.value,
       },
       {
         title: 'Actions',
